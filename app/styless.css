@@ -1,0 +1,9 @@
+.title{
+    margin: 3rem;
+}
+
+.backContainer{
+    height: 10rem;
+    background-color: black;
+    border-radius: 25%;
+}
