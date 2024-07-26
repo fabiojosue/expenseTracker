@@ -10,7 +10,7 @@ function goToHome() {
 
 //Redirects the user to the login page.
 function goToLogin() {
-    window.location.href = '/app/index.html';
+    window.location.href = '/app/pages/login.html';
 }
 
 /**
@@ -18,10 +18,29 @@ function goToLogin() {
  * This function also sets up the sidebar buttons with their respective actions.
  */
 function loadSidebar() {
+    let totalBudget = localStorage.getItem('budget');
+    if (totalBudget === null) {
+        totalBudget = 0;
+    } else {
+        totalBudget = parseFloat(totalBudget);
+    }
+
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    let totalExpenses = 0;
+    for (let i = 0; i < expenses.length; i++) {
+        totalExpenses += parseFloat(expenses[i].amount);
+    }
+
+    const budgetLeft = totalBudget - totalExpenses;
+    localStorage.setItem('budgetLeft', budgetLeft);
+    localStorage.setItem('totalExpenses', totalExpenses);
+
     const sidenavHTML = `
         <img src="/img/avatar.jpg" alt="avatar" class="avatar">
         <h2>Fabio</h2>
-        <p class="salary">Salary: $1200</p>
+        <p class="salary">Budget: $${totalBudget}</p>
+        <p class="salary" style='font-size:0.9rem;'>Expenses: $${totalExpenses}</p>
+        <p class="salary" style='font-size:0.8rem;'>Left: $${budgetLeft}</p>
         <hr class="divider">
         <button class="sdvButton" onclick="goToHome()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill icon" viewBox="0 0 16 16">

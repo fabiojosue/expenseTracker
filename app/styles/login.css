@@ -1,0 +1,39 @@
+/* .box{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    color: white;
+    width: 100%;
+    background-color: #212121;
+    border-radius: 25px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 50px;
+    margin-top: 2rem;
+    height: 25%;
+} */
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center; /* Align the box to the right */
+    align-items: center; /* Center the box vertically */
+    height: 100%;
+    padding-right: 2rem; /* Adjust as needed for spacing from the right edge */
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all child elements horizontally */
+    color: white;
+    width: 300px; /* Adjust the width as needed */
+    background-color: #212121;
+    border-radius: 25px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border: 1px solid #ccc;
+}

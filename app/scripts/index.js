@@ -1,4 +1,72 @@
-// import { getBudget, getCategories } from './settings.js';
+/**
+ * Loads and displays the expenses table from localStorage.
+ * If there are no expenses, displays a message indicating no expenses are added.
+ */
+function loadTable() {
+    // Retrieve expenses from localStorage or initialize an empty array if none exist
+    const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    
+    // Get the container and table elements from the DOM
+    const tableContainer = document.getElementById('expenseTableContainer');
+    const table = document.getElementById('expenseTable');
+
+    // Clear any existing content in the table
+    table.innerHTML = `
+        <li class="table-header">
+            <div class="colt header-col-1">Expense Name</div>
+            <div class="colt header-col-2">Category</div>
+            <div class="colt header-col-3">Amount</div>
+            <div class="colt header-col-4">Date</div>
+            <div class="colt header-col-5"></div>
+        </li>
+    `;
+
+    // Check if there are no expenses
+    if (expenses.length === 0) {
+        // Display a message indicating no expenses added
+        tableContainer.innerHTML = '<h2 style="margin-bottom:1rem;">No expenses added!</h2>';
+    } else {
+        // Loop through each expense and create a table row for each
+        expenses.forEach(expense => {
+            const row = document.createElement('li');
+            row.classList.add('table-row');
+            row.innerHTML = `
+                <div class="colt header-col-1" data-label="Expense name">${expense.title}</div>
+                <div class="colt header-col-2" data-label="Category">${expense.category}</div>
+                <div class="colt header-col-3" data-label="Amount">$${expense.amount}</div>
+                <div class="colt header-col-4" data-label="Date">${expense.date}</div>
+                <div class="colt header-col-5" data-label="Delete">
+                    <button class="cancelButton" onclick="deleteExpense('${expense.title}', '${expense.date}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill icon" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            table.appendChild(row);
+        });
+    }
+}
+
+/**
+ * Deletes an expense from the localStorage based on the title and date, then reloads the table.
+ * @param {string} title - The title of the expense to be deleted.
+ * @param {string} date - The date of the expense to be deleted.
+ */
+function deleteExpense(title, date) {
+    // Retrieve expenses from localStorage or initialize an empty array if none exist
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    
+    // Filter out the expense to be deleted
+    expenses = expenses.filter(expense => !(expense.title === title && expense.date === date));
+    
+    // Save the updated expenses array back to localStorage
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+    
+    // Refresh the table after deletion
+    loadTable();
+    window.location.href = '/app/index.html';
+}
 
 /**
  * Loads and displays the expense form into the 'expenseForm' element.
@@ -143,4 +211,7 @@ function addExpense(event) {
 
 
 // Initialize the 'Add Expense' button when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => loadExpenseBtn(true));
+document.addEventListener('DOMContentLoaded', () => {
+    loadExpenseBtn(true);
+    loadTable();
+});

@@ -194,10 +194,6 @@ h2{
     background-color: #212121;
     border-radius: 25px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        /* 10px 10px 20px rgba(0, 0, 0, 0.1),  Bottom-right shadow
-        -10px -10px 20px rgba(0, 0, 0, 0.1), Top-left shadow
-        10px -10px 20px rgba(0, 0, 0, 0.1),  Top-right shadow
-        -10px 10px 20px rgba(0, 0, 0, 0.1);  Bottom-left shadow */
     padding: 15px;
     margin-top: 2rem;
     height: calc(100vh - 5rem);
